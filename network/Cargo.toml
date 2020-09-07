@@ -1,9 +1,30 @@
 [package]
-name = "network"
+name = "oauth"
 version = "0.1.0"
-authors = ["钟杜生 <zhongdusheng@xunlei.com>"]
+authors = ["钟杜生"]
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+# reqwest = { version = "0.10", features = ["json"] }
+reqwest = { version = "0.10", default-features = false, features = ["json", "rustls-tls", "blocking"] }
+tokio = { version = "0.2", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = { version = "1.0" }
+chrono = "0.4"
+jni = { version = "0.10.2", default-features = false }
+log = "0.4"
+
+[features]
+
+
+[profile.release]
+lto = true
+
+[lib]
+name = "rust_sdk"
+crate-type = ["cdylib"]
+
+[target.'cfg(target_os = "android")'.dependencies]
+android_logger = "0.9"
